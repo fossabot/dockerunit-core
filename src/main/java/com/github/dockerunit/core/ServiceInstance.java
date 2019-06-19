@@ -20,8 +20,10 @@ import lombok.experimental.Wither;
 public class ServiceInstance {
 
     private final String containerName;
-    private final String ip;
+    private final String gatewayIp;
     private final int port;
+
+    private String containerIp;
     private String containerId;
     private String statusDetails;
     private Status status;
@@ -67,7 +69,7 @@ public class ServiceInstance {
     }
 
     /**
-     * Provides the ip of this svc instance.
+     * Provides the ip of the gateway to reach this svc instance.
      * Currently, the ip of the Docker bridge interface on your machine.
      * By default Dockerunit uses {@literal 172.17.42.1}.
      * You can override this by using the {@literal -Ddocker.bridge.ip} system property.
@@ -76,10 +78,10 @@ public class ServiceInstance {
      * mvn test -Ddocker.bridge.ip=172.17.0.1
      * </pre>
      *
-     * @return the ip of the svc instance.
+     * @return the ip of the gateway to reach the svc instance.
      */
-    public String getIp() {
-        return ip;
+    public String getGatewayIp() {
+        return gatewayIp;
     }
 
     /**
@@ -101,6 +103,21 @@ public class ServiceInstance {
      */
     public String getContainerId() {
         return containerId;
+    }
+
+    /**
+     *
+     * @return the ip of the underlying container
+     */
+    public String getContainerIp() {
+        return containerIp;
+    }
+
+    /**
+     * @return the status
+     */
+    public Status getStatus() {
+        return status;
     }
 
     /**
